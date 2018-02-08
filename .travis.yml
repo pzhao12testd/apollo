@@ -18,6 +18,8 @@ before_cache:
   $HOME/CACHE$line); mkdir -p $DIR; cp -r $line $DIR; done
 - echo CACHESIZE $(du -sk $HOME/CACHE)
 before_install:
+- wget http://mir.cs.illinois.edu/awshi2/starts-1.4.zip -P $HOME
+- unzip $HOME/starts-1.4.zip -d $HOME/.m2/repository
 - find $HOME/CACHE -name jdeps-cache | while read line; do du -sh $line;         DIR=$(dirname
   ${line#$HOME/CACHE}); if [[ -d ${DIR#jdeps-cache/} ]]; then cp -r $line $DIR; fi;
   done
@@ -48,12 +50,6 @@ env:
 jdk:
 - oraclejdk8
 language: java
-notification:
-  email:
-    on_failure: always
-    on_success: always
-    recipients:
-    - song_s@ctrip.com,zhanglea@ctrip.com
 script:
 - touch /tmp/NOW
 - echo GIBSTUDYSTART $(date)
